@@ -1,0 +1,40 @@
+﻿body
+{
+	background-color: #58D3F7;	
+}
+
+#resultContainer
+{
+	position: absolute;
+	left: 35%;
+	top: 10%;
+	background-color: #D8D8D8;
+	border: 2px solid #666;
+	border-radius: 5px;
+}
+
+#result
+{
+	padding-bottom: 10px;
+}
+
+#topElements
+{
+	position: absolute;
+	top: 2%;
+	left: 40%;
+}
+
+.profileImage
+{
+	height: 50px;
+	width: 80px;
+	border-radius: 10px;
+	padding: 2px;
+}
+
+.tweetText
+{
+	font-size: 200%;
+	padding: 5px;
+}

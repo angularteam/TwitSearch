@@ -1,16 +1,33 @@
 ﻿<!doctype html>
-<html ng-app>
+<html ng-app = "Twitter">
 <head>
 	<title>AngularJS App for Twitter</title>
 	<script src="angular.js"></script>
+	<script type="text/javascript" src="angular-resource.js"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+
+	<script type="text/javascript" src="TwitterSearch.js"></script>
 </head>
 <body>
 	<div>
-		<label>Name:</label>
-		// Angular Model
-		<input type="text" ng-model="nameField" placeholder="Enter twitter search query">
-		<hr>
-		<h1>Hello {{nameField}}!</h1>
+		<form class="form-horizontal" id="topElements">
+			<input class="input-lg" type="text" ng-model="searchField" placeholder="Enter twitter search query here">
+			<button class="btn-success">Search on Twitter</button>
+		</form>
+		
+		<div ng-controller="TwitterCtrl">
+
+		</div>
+
+		<div id="resultContainer" ng-controller="SampleCtrl">
+			<div id="result" ng-repeat="data in sampleData">
+				<img class="profileImage" src={{data.img}}>
+				<span class="tweetText">{{data.text}}</span>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
