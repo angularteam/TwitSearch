@@ -38,3 +38,12 @@
 	font-size: 200%;
 	padding: 5px;
 }
+
+.visible 
+{
+	visibility: visible;
+}
+.hidden 
+{
+	visibility: collapse;
+}

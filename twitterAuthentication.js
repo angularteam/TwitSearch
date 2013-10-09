@@ -1,8 +1,9 @@
 /*
 Twitter authentication
 */
+angular.module('Twitter',['ngResource'])
 
-function TwitterAuthenticateCtrl($scope) {
+function TwitterAuthenticateCtrl($scope, $resource) {
 	var cb = new Codebird();
 	cb.setConsumerKey("0WEBuCyNrPRAUwWR2VDKnA", "ZJ2sQECiN4Eh8OUMaCdoHr3WYKeTRBMHKlVormMQI");
 
@@ -116,16 +117,23 @@ function TwitterAuthenticateCtrl($scope) {
 
 	};
 
+	$scope.setTweetData=function(tweetData)
+	{
+		$scope.tweetData = tweetData;
+		$scope.$apply();
+	};
+
 	$scope.twitterSearchTwits=function()
 	{
-		var searchString = "q=" + $scope.searchString;
+		var self = this;
+		var searchField = "q=" + $scope.searchField;
 		cb.__call(
 		    "search_tweets",
-		    searchString,
+		    searchField,
 		    function (reply) {
-		        // ...
+		        self.setTweetData(reply.statuses)
 		    },
-		    true // this parameter required
+		    true // this parameter required as this is application level call.
 		);
 	};
 }

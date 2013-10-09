@@ -9,24 +9,38 @@
 	<link rel="stylesheet" href="bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="styles.css">
 
-	<script type="text/javascript" src="TwitterSearch.js"></script>
+	<script type="text/javascript" src="codebird-js-2.4.3/codebird.js"></script>
+	<script type="text/javascript" src="codebird-js-2.4.3/sha1.js"></script>
+	<script type="text/javascript" src="twitterAuthentication.js"></script> 
+
 </head>
 <body>
-	<div>
-		<form class="form-horizontal" id="topElements">
-			<input class="input-lg" type="text" ng-model="searchField" placeholder="Enter twitter search query here">
-			<button class="btn-success">Search on Twitter</button>
-		</form>
-		
-		<div ng-controller="TwitterCtrl">
-
+	<div ng-controller="TwitterAuthenticateCtrl">
+		<button ng-click="clearCookie()"> Clear cookie </button>
+		<div id="welcomeDiv" class="hidden">
+			<h1> Welcome <b>{{screen_name}}!</b> </h1>
+			<hr>
+			<!-- <button ng-click="twitterGetTimeline()"> Get Home Timeline</button> -->
 		</div>
+		<div id="signinDiv" class="hidden">
+			<button ng-click="twitterSignIn()"> Sign In </button>
+			<br/>
+			<label>Enter Twitter Pin:</label>
+			<input type="text" ng-model="pinfield" placeholder="Enter twitter generated pin"> 
+			<button ng-click="twitterAuthenticate()"> Authenticate Me</button>
+			<br/>
+		</div>
+		<div>
+			<input class="input-lg" type="text" ng-model="searchField" placeholder="Enter twitter search query here">
+			<button class="btn-success" ng-click="twitterSearchTwits()">Search on Twitter</button>
 
-		<div id="resultContainer" ng-controller="SampleCtrl">
-			<div id="result" ng-repeat="data in sampleData">
-				<img class="profileImage" src={{data.img}}>
-				<span class="tweetText">{{data.text}}</span>
+			<div id="resultContainer">
+				<div id="result" ng-repeat="data in tweetData">
+					<img class="profileImage" src={{data.user.profile_image_url}}>
+					<span class="tweetText">{{data.text}}</span>
+				</div>
 			</div>
+
 		</div>
 	</div>
 </body>
