@@ -16,32 +16,30 @@
 </head>
 <body>
 	<div ng-controller="TwitterAuthenticateCtrl">
-		<button ng-click="clearCookie()"> Clear cookie </button>
+		<button ng-click="clearCookie()" class="btn"> Clear cookie </button>
 		<div id="welcomeDiv" class="hidden">
 			<h1> Welcome <b>{{screen_name}}!</b> </h1>
-			<hr>
-			<!-- <button ng-click="twitterGetTimeline()"> Get Home Timeline</button> -->
 		</div>
-		<div id="signinDiv" class="hidden">
-			<button ng-click="twitterSignIn()"> Sign In </button>
-			<br/>
+		<span id="signinDiv" class="hidden">
+			<button ng-click="twitterSignIn()" class="btn"> Sign In </button>
 			<label>Enter Twitter Pin:</label>
 			<input type="text" ng-model="pinfield" placeholder="Enter twitter generated pin"> 
-			<button ng-click="twitterAuthenticate()"> Authenticate Me</button>
-			<br/>
-		</div>
-		<div>
+			<button ng-click="twitterAuthenticate()" class="btn"> Authenticate Me</button>
+
+		</span>
+
+		<form class="form-horizontal" id="topElements">
 			<input class="input-lg" type="text" ng-model="searchField" placeholder="Enter twitter search query here">
 			<button class="btn-success" ng-click="twitterSearchTwits()">Search on Twitter</button>
+		</form>
 
-			<div id="resultContainer">
-				<div id="result" ng-repeat="data in tweetData">
-					<img class="profileImage" src={{data.user.profile_image_url}}>
-					<span class="tweetText">{{data.text}}</span>
-				</div>
+		<div id="resultContainer">
+			<div id="result" ng-repeat="data in tweetData">
+				<img class="profileImage" src={{data.user.profile_image_url}}>
+				<span class="tweetText">{{data.text}}</span>
 			</div>
-
 		</div>
+		
 	</div>
 </body>
 </html>
