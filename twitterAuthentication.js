@@ -1,9 +1,22 @@
 /*
 Twitter authentication
 */
-angular.module('Twitter',['ngResource'])
+angular.module('Twitter',['compile']).
+ filter('linkify', function() {
+	return function(input, hashTags) {
+	var out = input;
+	var exp = '\S*#(?:\[[^\]]+\]|\S+)';
 
-function TwitterAuthenticateCtrl($scope, $resource) {
+	for(var i=0;i<hashTags.length; i++)
+	{
+		var tag = hashTags[i].text;
+		out = out.replace("#"+hashTags[i].text, "<a href=\'#\' ng-click=\"searchHashtags(\'" + hashTags[i].text + "\')\">#" + hashTags[i].text + "</a>");
+	}
+	return out;
+	}
+	});
+
+function TwitterAuthenticateCtrl($scope) {
 	var cb = new Codebird();
 	cb.setConsumerKey("0WEBuCyNrPRAUwWR2VDKnA", "ZJ2sQECiN4Eh8OUMaCdoHr3WYKeTRBMHKlVormMQI");
 
@@ -68,6 +81,11 @@ function TwitterAuthenticateCtrl($scope, $resource) {
 		$scope.$apply();
 	};
 
+	$scope.searchHashtags = function(tagText)
+	{
+		$scope.$apply($scope.searchField = tagText);
+		$scope.twitterSearchTwits();
+	};
 
 	$scope.twitterAuthenticate=function ()
 	{
@@ -137,3 +155,31 @@ function TwitterAuthenticateCtrl($scope, $resource) {
 		);
 	};
 }
+
+  // declare a new module, and inject the $compileProvider
+angular.module('compile', [], function($compileProvider) {
+  // configure new 'compile' directive by passing a directive
+  // factory function. The factory function injects the '$compile'
+  $compileProvider.directive('compile', function($compile) {
+    // directive factory creates a link function
+    return function(scope, element, attrs) {
+      scope.$watch(
+        function(scope) {
+           // watch the 'compile' expression for changes
+          return scope.$eval(attrs.compile);
+        },
+        function(value) {
+          // when the 'compile' expression changes
+          // assign it into the current DOM
+          element.html(value);
+
+          // compile the new DOM and link it to the current
+          // scope.
+          // NOTE: we only compile .childNodes so that
+          // we don't get into infinite loop compiling ourselves
+          $compile(element.contents())(scope);
+        }
+      );
+    };
+  })
+});

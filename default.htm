@@ -4,7 +4,6 @@
 	<title>AngularJS App for Twitter</title>
 	<script src="angular.js"></script>
 	<script type="text/javascript" src="angular-resource.js"></script>
-
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="styles.css">
@@ -24,7 +23,7 @@
 			<button ng-click="twitterSignIn()" class="btn"> Sign In </button>
 			<label>Enter Twitter Pin:</label>
 			<input type="text" ng-model="pinfield" placeholder="Enter twitter generated pin"> 
-			<button ng-click="twitterAuthenticate()" class="btn"> Authenticate Me</button>
+			<button ng-click="twitterAuthenticate()" > Authenticate Me</button>
 
 		</span>
 
@@ -36,7 +35,7 @@
 		<div id="resultContainer">
 			<div id="result" ng-repeat="data in tweetData">
 				<img class="profileImage" src={{data.user.profile_image_url}}>
-				<span class="tweetText">{{data.text}}</span>
+				<span class="tweetText" compile="data.text | linkify : data.entities.hashtags"></span>
 			</div>
 		</div>
 		
